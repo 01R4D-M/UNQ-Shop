@@ -79,15 +79,15 @@ public class ProductoIndividual extends Producto {
 	}
 	
 	public Object getAtributo(String nombreAtributo) {
-		return this.atributosValidables.get(nombreAtributo);
+		return this.atributosValidables.get(nombreAtributo.toLowerCase());
 	}
 	
 	public void setAtributo(String nombreAtributo, Object valor) {
-		this.atributosValidables.put(nombreAtributo, valor);
+		this.atributosValidables.put(nombreAtributo.toLowerCase(), valor);
 	}
 	
 	public void eliminarAtributo(String nombreAtributo) {
-		this.atributosValidables.remove(nombreAtributo);
+		this.atributosValidables.remove(nombreAtributo.toLowerCase());
 	}
 	
 	public boolean validarAtributosObligatorios() {

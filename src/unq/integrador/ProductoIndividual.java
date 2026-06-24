@@ -9,7 +9,7 @@ public class ProductoIndividual extends Producto {
     private String categoria;
     private double peso;
     private double precioBase;
-    private Map<String, Object> atributosValidables;
+    private Map<String, Object> atributosDinamicos;
     
     public ProductoIndividual(	String nombre,
     							String descripcion,
@@ -25,10 +25,9 @@ public class ProductoIndividual extends Producto {
     	this.setCategoria(categoria);
     	this.setPeso(peso);
     	this.setPrecioBase(precioBase);
-    	this.atributosValidables = new HashMap<String, Object>();
+    	this.atributosDinamicos = new HashMap<String, Object>();
     	
-    	this.atributosValidables.put("sku", this.getSku());
-    	this.atributosValidables.put("nombre", this.getNombre());
+    	
     	
     }
     
@@ -79,22 +78,22 @@ public class ProductoIndividual extends Producto {
 	}
 	
 	public Object getAtributo(String nombreAtributo) {
-		return this.atributosValidables.get(nombreAtributo.toLowerCase());
+		return this.atributosDinamicos.get(nombreAtributo.toLowerCase());
 	}
 	
 	public void setAtributo(String nombreAtributo, Object valor) {
-		this.atributosValidables.put(nombreAtributo.toLowerCase(), valor);
+		this.atributosDinamicos.put(nombreAtributo.toLowerCase(), valor);
 	}
 	
 	public void eliminarAtributo(String nombreAtributo) {
-		this.atributosValidables.remove(nombreAtributo.toLowerCase());
+		this.atributosDinamicos.remove(nombreAtributo.toLowerCase());
 	}
 	
 	public boolean validarAtributosObligatorios() {
-			return this.validarAtributo("sku") && this.validarAtributo("nombre");
+			return this.sku > 0 && this.getNombre() != null;
 	}
 	
-	public boolean validarAtributo(String nombreAtributo) {
+	public boolean validarAtributoDinamico(String nombreAtributo) {
 		
 		Object valorAValidar = this.getAtributo(nombreAtributo);
 		return valorAValidar != null;

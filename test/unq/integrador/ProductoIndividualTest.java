@@ -50,5 +50,19 @@ class ProductoIndividualTest {
 		assertTrue(producto.validarAtributosObligatorios());
 	}
 	
-	
+	@Test
+	void testValidacionAtributosDinamicos() {
+		producto.setAtributo("largo", 33);
+		assertTrue(producto.validarAtributoDinamico("largo"));
+	}
+	@Test
+	void testEliminacionDeAtributoDinamico() {
+		producto.setAtributo("material", "plastico");
+		producto.eliminarAtributo("material");
+		assertFalse(producto.validarAtributoDinamico("material"));
+	}
+	@Test
+	void testElPrecioFinalEsIgualAlPrecioBase() {
+		assertEquals(producto.getPrecioBase(), producto.getPrecioFinal());
+	}
 }

@@ -4,11 +4,13 @@ public abstract class Producto implements IProducto {
     
 	private String nombre;
 	private String descripcion;
+	private String categoria;
 	
-	public Producto(String nombre, String descripcion) {
+	public Producto(String nombre, String descripcion, String categoria) {
 		super();
 		this.setNombre(nombre);
 		this.setDescripcion(descripcion);
+		this.setCategoria(categoria);
 	}
 	
 	public String getNombre() {
@@ -25,6 +27,14 @@ public abstract class Producto implements IProducto {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 
 	public abstract double getPrecioBase();

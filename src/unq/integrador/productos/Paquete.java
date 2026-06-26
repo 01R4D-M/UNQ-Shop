@@ -7,8 +7,8 @@ public class Paquete extends Producto {
 	private double porcentajeDescuento;
 	private List<Producto> productos;
 	
-	public Paquete(String nombre, String descripcion, int descuento) {
-		super(nombre, descripcion);
+	public Paquete(String nombre, String descripcion, String categoria, int descuento) {
+		super(nombre, descripcion, categoria);
 		this.setPorcentajeDescuento(descuento);
 		this.productos = new ArrayList<Producto>();
 	}

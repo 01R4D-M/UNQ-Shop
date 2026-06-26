@@ -4,6 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
+
+import unq.integrador.productos.Paquete;
+import unq.integrador.productos.Producto;
+import unq.integrador.productos.ProductoIndividual;
+
 import static org.mockito.Mockito.*;
 
 

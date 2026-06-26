@@ -1,4 +1,4 @@
-package unq.integrador;
+package unq.integrador.productos;
 import java.util.List;
 import java.util.ArrayList;
 

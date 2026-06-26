@@ -1,4 +1,4 @@
-package unq.integrador;
+package unq.integrador.productos;
 
 public abstract class Producto implements IProducto {
     

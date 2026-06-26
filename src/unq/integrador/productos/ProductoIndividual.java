@@ -1,4 +1,4 @@
-package unq.integrador;
+package unq.integrador.productos;
 import java.util.Map;
 import java.util.HashMap;
 

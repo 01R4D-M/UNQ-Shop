@@ -1,4 +1,4 @@
-package unq.integrador;
+package unq.integrador.productos;
 
 public interface IProducto {
 	public String getNombre();

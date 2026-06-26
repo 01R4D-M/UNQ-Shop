@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
 
+import unq.integrador.productos.ProductoIndividual;
+
 class ProductoIndividualTest {
 
 	private ProductoIndividual producto;

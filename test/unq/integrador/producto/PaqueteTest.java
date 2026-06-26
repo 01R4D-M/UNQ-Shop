@@ -1,4 +1,4 @@
-package unq.integrador;
+package unq.integrador.producto;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,11 +25,11 @@ class PaqueteTest {
 	
 	@BeforeEach
 	void setUp() {
-		paquete = new Paquete ("Audio", "Auriculares + Parlantes", 10);
+		paquete = new Paquete ("Musica", "Auriculares + Parlantes", "Audio", 10);
 		
 		
 		
-		paqueteHogar = new Paquete("Hogar", "Plancha + Aspiradora + Lavarropas", 25);
+		paqueteHogar = new Paquete("Hogareño", "Plancha + Aspiradora + Lavarropas", "Hogar", 25);
 		
 		auriculares = mock(ProductoIndividual.class);
 		parlantes = mock(ProductoIndividual.class);
@@ -52,13 +52,13 @@ class PaqueteTest {
 	@Test
 	void testElDescuentoDebeSerMenorOIgualACien() {
 		assertThrows(	IllegalArgumentException.class, 
-						() -> new Paquete("Cocina", "Licuadora + Tostadora", 101));
+						() -> new Paquete("Gastronomico", "Licuadora + Tostadora", "Cocina", 101));
 	}
 	
 	@Test
 	void testElDescuentoDebeSerMayorOIgualACero() {
 		assertThrows(	IllegalArgumentException.class, 
-						() -> new Paquete("Cocina", "Licuadora + Tostadora", -1));
+						() -> new Paquete("Gastronomico", "Licuadora + Tostadora", "Cocina", -1));
 	}
 	
 	@Test 

@@ -6,7 +6,7 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import unq.integrador.IProducto;
+import unq.integrador.productos.IProducto;
 import unq.integrador.envio.IEnvio;
 import unq.integrador.pago.MetodoDePago;
 import unq.integrador.pedido.state.PedidoState;

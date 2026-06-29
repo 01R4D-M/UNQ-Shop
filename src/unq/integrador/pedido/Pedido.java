@@ -3,7 +3,7 @@ package unq.integrador.pedido;
 import java.util.ArrayList;
 import java.util.List;
 
-import unq.integrador.IProducto;
+import unq.integrador.productos.IProducto;
 import unq.integrador.envio.IEnvio;
 import unq.integrador.notificacion.PedidoObserver;
 import unq.integrador.pago.MetodoDePago;

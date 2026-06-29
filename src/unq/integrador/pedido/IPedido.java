@@ -1,6 +1,6 @@
 package unq.integrador.pedido;
 
-import unq.integrador.IProducto;
+import unq.integrador.productos.IProducto;
 import unq.integrador.envio.IEnvio;
 import unq.integrador.pago.MetodoDePago;
 import unq.integrador.pedido.state.PedidoState;

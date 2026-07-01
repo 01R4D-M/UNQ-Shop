@@ -19,10 +19,9 @@ public class Paquete extends Producto {
 
 	public void setPorcentajeDescuento(double porcentajeDescuento) {  
 		
-		if(porcentajeDescuento < 0 || porcentajeDescuento > 100) {
-			throw new IllegalArgumentException("El descuento debe estar entre 1 y 100");
-		}
-		this.porcentajeDescuento = porcentajeDescuento;
+		if(porcentajeDescuento >= 0 && porcentajeDescuento <= 100) {
+			this.porcentajeDescuento = porcentajeDescuento;
+		}	
 	}
 	
 	public void agregarProducto(Producto producto) {

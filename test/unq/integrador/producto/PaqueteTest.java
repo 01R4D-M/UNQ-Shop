@@ -44,21 +44,21 @@ class PaqueteTest {
 	
 	@Test
 	void testInicialzacionConstructor() {
-		assertEquals("Audio", paquete.getNombre());
+		assertEquals("Musica", paquete.getNombre());
 		assertEquals("Auriculares + Parlantes", paquete.getDescripcion());
 		assertEquals(10, paquete.getPorcentajeDescuento());
 	}
 	
 	@Test
-	void testElDescuentoDebeSerMenorOIgualACien() {
-		assertThrows(	IllegalArgumentException.class, 
-						() -> new Paquete("Gastronomico", "Licuadora + Tostadora", "Cocina", 101));
+	void testSiElDescuentoSeteadoEnElConstructorNoEsMenorOIgualACien_ElDescuentoEsCero() {
+		Paquete unPaquete = new Paquete("Gastronomico", "Licuadora + Tostadora", "Cocina", 101);
+		assertEquals(0, unPaquete.getPorcentajeDescuento());
 	}
 	
 	@Test
-	void testElDescuentoDebeSerMayorOIgualACero() {
-		assertThrows(	IllegalArgumentException.class, 
-						() -> new Paquete("Gastronomico", "Licuadora + Tostadora", "Cocina", -1));
+	void testSiElDescuentoSeteadoNoEsMayorOIgualACero_ElDescuentoEsCero() {
+		Paquete unPaquete = new Paquete("Gastronomico", "Licuadora + Tostadora", "Cocina", -1);
+		assertEquals(0, unPaquete.getPorcentajeDescuento());
 	}
 	
 	@Test 

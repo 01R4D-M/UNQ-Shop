@@ -1,11 +1,13 @@
 package unq.integrador.productos;
 import java.util.List;
+import java.util.ArrayList;
 
 public class Catalogo {
 	private List<Producto> productos;
 	
 	public Catalogo() {
 		super();
+		this.productos = new ArrayList<Producto>();
 		
 	}
 	
@@ -16,11 +18,8 @@ public class Catalogo {
 	public void eliminarProducto(Producto producto) {
 		this.productos.remove(producto);
 	}
-	
-	public int getStockDe(Producto producto){
-		 long stock = productos.stream()
-				 		.filter(p -> p.getNombre() == producto.getNombre())
-				 		.count();
-		 return (int) stock;
+	public boolean tieneProducto(Producto producto) {
+		return this.productos.contains(producto);
 	}
+	
 }

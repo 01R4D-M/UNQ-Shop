@@ -2,24 +2,16 @@ package unq.integrador.busqueda;
 import unq.integrador.productos.*;
 
 public class PorDisponibilidadEn implements Criterio {
-	private int disponibilidad;
+	private UNQShop shop;
 	
-	public PorDisponibilidadEn(Producto producto, Catalogo catalogo) {
+	public PorDisponibilidadEn(UNQShop shop) {
 		super();
-		this.setDisponibilidad(catalogo.getStockDe(producto));
+		this.shop = shop;
 		
 	}
 	
 	public boolean cumple(Producto producto) {
-		return this.getDisponibilidad() > 0;
-	}
-
-	public int getDisponibilidad() {
-		return disponibilidad;
-	}
-
-	public void setDisponibilidad(int disponibilidad) {
-		this.disponibilidad = disponibilidad;
+		return shop.hayStockDe(producto);
 	}
 
 }

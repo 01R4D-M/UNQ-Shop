@@ -3,6 +3,10 @@ package unq.integrador.pedido.state;
 import unq.integrador.pedido.IPedido;
 
 public class Confirmado extends PedidoState {
+    public Confirmado(IPedido pedido){
+        pedido.reducirStock();
+    }
+
     public boolean puedeModificarProductos() {
         return false;
     }

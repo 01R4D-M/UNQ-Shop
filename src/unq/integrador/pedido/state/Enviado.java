@@ -13,6 +13,7 @@ public class Enviado extends PedidoState {
 
     public void cancelarPedido(IPedido pedido) {
         pedido.reembolsarSinEnvio();
+        pedido.reponerStock();
         pedido.setEstado(new Cancelado());
     }
 }

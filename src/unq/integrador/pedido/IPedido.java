@@ -25,4 +25,7 @@ public interface IPedido {
     public void setMetodoDePago(MetodoDePago metodoDePago);
 
     public void setEstado(PedidoState estado);
+
+    public void reducirStock();
+    public void reponerStock();
 }

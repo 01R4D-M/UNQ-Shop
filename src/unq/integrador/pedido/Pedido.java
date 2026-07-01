@@ -1,8 +1,11 @@
 package unq.integrador.pedido;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import unq.integrador.productos.Deposito;
 import unq.integrador.productos.IProducto;
 import unq.integrador.envio.IEnvio;
 import unq.integrador.notificacion.PedidoObserver;
@@ -11,27 +14,34 @@ import unq.integrador.pedido.state.Borrador;
 import unq.integrador.pedido.state.PedidoState;
 
 public class Pedido implements IPedido {
-    private List<IProducto> productos;
+    private Map<IProducto, Integer> productos;
     private IEnvio metodoDeEnvio;
     private MetodoDePago metodoDePago;
     private List<PedidoObserver> subsistemas;
     private PedidoState estado;
+    private Deposito deposito;
 
-    public Pedido(){
-        productos = new ArrayList<IProducto>();
-        subsistemas = new ArrayList<PedidoObserver>();
-        estado = new Borrador();
+    public Pedido(Deposito deposito){
+        this.productos = new HashMap<IProducto,Integer>();
+        this.subsistemas = new ArrayList<PedidoObserver>();
+        this.estado = new Borrador();
+        this.deposito = deposito;
     }
 
     public void agregarProducto(IProducto producto) {
-        if (this.estado.puedeModificarProductos()){
-            this.productos.add(producto);
+        int stockProducto = this.deposito.getStockDe(producto);
+        int cantProducto = this.productos.getOrDefault(producto, 0);
+
+        if (this.estado.puedeModificarProductos() && stockProducto > cantProducto){
+            this.productos.put(producto, cantProducto + 1);
         }
     }
 
     public void eliminarProducto(IProducto producto) {
-        if (this.estado.puedeModificarProductos()){
-            this.productos.remove(producto);
+        int cantProducto = this.productos.getOrDefault(producto, 0);
+
+        if (this.estado.puedeModificarProductos() && cantProducto > 0){
+            this.productos.put(producto, cantProducto - 1);
         }
     }
 
@@ -84,7 +94,12 @@ public class Pedido implements IPedido {
     }
 
     private double getPeso() {
-        return this.productos.stream().mapToDouble(p -> p.getPeso()).sum();
+        return
+            this.productos
+            .entrySet()
+            .stream()
+            .mapToDouble(p -> p.getKey().getPeso() * p.getValue())
+            .sum();
     }
 
     private double calcularDistancia() {
@@ -92,10 +107,29 @@ public class Pedido implements IPedido {
     }
 
     private double getPrecioFinal() {
-        return this.productos.stream().mapToDouble(p -> p.getPrecioFinal()).sum();
+        return
+            this.productos
+            .entrySet()
+            .stream()
+            .mapToDouble(p -> p.getKey().getPrecioFinal() * p.getValue())
+            .sum();
     }
 
     private double getCostoEnvio() {
         return this.metodoDeEnvio.calcularCosto(this.getPeso(), this.calcularDistancia());
+    }
+
+    public void reducirStock() {
+        this.productos
+        .entrySet()
+        .stream()
+        .forEach(p -> this.deposito.decrementarStock(p.getKey(), p.getValue()));
+    }
+
+    public void reponerStock() {
+        this.productos
+        .entrySet()
+        .stream()
+        .forEach(p -> this.deposito.incrementarStock(p.getKey(), p.getValue()));
     }
 }

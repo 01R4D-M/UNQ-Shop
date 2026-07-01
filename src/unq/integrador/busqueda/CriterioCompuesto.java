@@ -1,6 +1,6 @@
 package unq.integrador.busqueda;
 
-import unq.integrador.productos.Producto;
+import unq.integrador.productos.IProducto;
 
 public abstract class CriterioCompuesto implements Criterio {
 	
@@ -12,7 +12,7 @@ public abstract class CriterioCompuesto implements Criterio {
 		this.setCriterio2(criterio2);
 	}
 	@Override
-	public abstract boolean cumple(Producto producto);
+	public abstract boolean cumple(IProducto producto);
 
 	public Criterio getCriterio1() {
 		return criterio1;

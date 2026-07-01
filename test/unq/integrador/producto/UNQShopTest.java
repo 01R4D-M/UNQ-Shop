@@ -10,73 +10,78 @@ import static org.mockito.Mockito.*;
 import unq.integrador.pedido.*;
 
 public class UNQShopTest {
-	private UNQShop shop;
+	private UNQShop shopConDepositoMock;
+	private UNQShop shopConDepositoReal;
 	private Producto producto;
+	private Deposito depositoMock;
+	private Deposito depositoReal;
 	
 	@BeforeEach
 	void setUp() {
-		shop = new UNQShop(new Deposito());
+		depositoMock = mock(Deposito.class);
+		depositoReal = new Deposito();
+		shopConDepositoMock = new UNQShop(depositoMock);
+		shopConDepositoReal = new UNQShop(depositoReal);
 		producto = mock(Producto.class);
 	}
 	
-	@Test 
-	void testSeIncrementaElStockDeUnProductoExistenteDeFormaValida() {
-		shop.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
-		shop.incrementarStock(producto, 10);
-		
-		assertEquals(20, shop.getStockDe(producto));
-		assertTrue(shop.contieneProductoEnCatalogo(producto));
+	@Test
+	void testSeAgreganProductosAlCatalogoDeFormaValida() {
+		shopConDepositoMock.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 5);
+		assertTrue(shopConDepositoMock.contieneProductoEnCatalogo(producto));
 	}
 	@Test 
-	void testSiElProductoNoEstaEnElCatalogo_NoSePuedeIncrementarElStock() {
-		shop.incrementarStock(producto, 10);
-		assertEquals(0, shop.getStockDe(producto));
-		assertFalse(shop.contieneProductoEnCatalogo(producto));
+	void testSeIncrementaElStockDeUnProductoQueEstaEnElCatalogoDeFormaValida() {
+		shopConDepositoReal.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
+		shopConDepositoReal.incrementarStock(producto, 10);
+		
+		assertEquals(20, shopConDepositoReal.getStockDe(producto));
+		assertTrue(shopConDepositoReal.contieneProductoEnCatalogo(producto));
+	}
+	@Test 
+	void testSiElProductoNoEstaEnElCatalogo_NoIncrementaElStock() {
+		shopConDepositoReal.incrementarStock(producto, 10);
+		assertEquals(0, shopConDepositoReal.getStockDe(producto));
+		assertFalse(shopConDepositoReal.contieneProductoEnCatalogo(producto));
+	}
+	@Test
+	void testSiElProductoNoEstaEnElCatalogoElShopNoInteractuaConElDeposito(){
+		shopConDepositoMock.incrementarStock(producto, 10);
+		verifyNoInteractions(depositoMock);
 	}
 	@Test
 	void testNoSePuedeAgregarDosVecesElMismoProductoAlCatalogo(){
-		shop.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
-		shop.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
-		assertEquals(10, shop.getStockDe(producto));
+		shopConDepositoMock.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
+		shopConDepositoMock.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
+		assertEquals(1, shopConDepositoMock.ocurrenciasDeEnCatalogo(producto));
 	}
 	@Test
-	void testSiElStockAgregadoEsCeroNoHayStockDeEseProducto() {
-		shop.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 0);
-		assertFalse(shop.hayStockDe(producto));
+	void testElShopInteractuaConElDepositoAlAgregarStock() {
+		shopConDepositoMock.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
+		verify(depositoMock).incrementarStock(producto, 10);
 	}
 	@Test
-	void testSiElStockAgregadoEsMayorACero_HayStockDeEseProducto() {
-		shop.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 3);
-		assertTrue(shop.hayStockDe(producto));
-		assertEquals(3, shop.getStockDe(producto));
+	void testElShopInteractuaConElDepositoAlDecrementarStock() {
+		shopConDepositoMock.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
+		shopConDepositoMock.decrementarStock(producto, 5);
+		verify(depositoMock).decrementarStock(producto, 5);
 	}
 	@Test
-	void testElStockDeUnProductoSeDecrementaDeFormaValida() {
-		shop.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
-		shop.decrementarStock(producto, 5);
-		assertEquals(5, shop.getStockDe(producto));
+	void testAunqueSeIntenteDecrementarMasStockDelDisponibleElShopInteractuaConElDeposito() {
+		shopConDepositoMock.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 5);
+		shopConDepositoMock.decrementarStock(producto, 10);
+		verify(depositoMock).decrementarStock(producto, 10);
 	}
 	@Test
-	void testSiNoHaySuficienteStockEsteNoSeDecrementa() {
-		shop.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 5);
-		shop.decrementarStock(producto, 10);
-		assertEquals(5, shop.getStockDe(producto));
-	}
-	@Test
-	void testSiSeQuiereDecrementarUnaCantidadDeStockNegativa_NoHaceNada() {
-		shop.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
-		shop.decrementarStock(producto, -5);
-		assertEquals(10, shop.getStockDe(producto));
-	}
-	@Test
-	void testSiElStockDeUnProductoEsCeroNoEstaDisponible() {
-		shop.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 0);
-		assertFalse(shop.hayStockDe(producto));
+	void testComoElShopNoConoceLaLogicaSobreManejoDeStock_AunqueLaOperacionSeaInvalidaElShopInteractuaConElDeposito() {
+		shopConDepositoMock.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
+		shopConDepositoMock.decrementarStock(producto, -5);
+		verify(depositoMock).decrementarStock(producto, -5);
 	}
 	@Test
 	void testLosPedidosSeAgreganDeFormaValida() {
 		IPedido pedido = mock(IPedido.class);
-		shop.setPedido(pedido);
-		assertTrue(shop.getPedidos().contains(pedido));
+		shopConDepositoMock.setPedido(pedido);
+		assertTrue(shopConDepositoMock.getPedidos().contains(pedido));
 	}
 }

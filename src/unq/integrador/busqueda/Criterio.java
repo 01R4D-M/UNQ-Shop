@@ -3,5 +3,5 @@ import unq.integrador.productos.*;
 
 
 public interface Criterio {
-	public boolean cumple(Producto producto);
+	public boolean cumple(IProducto producto);
 }

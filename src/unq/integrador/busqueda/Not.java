@@ -1,5 +1,5 @@
 package unq.integrador.busqueda;
-import unq.integrador.productos.*;
+import unq.integrador.productos.IProducto;
 
 public class Not implements Criterio {
 	private Criterio criterio;
@@ -17,7 +17,7 @@ public class Not implements Criterio {
 		this.criterio = criterio;
 	}
 	
-	public boolean cumple(Producto producto) {
+	public boolean cumple(IProducto producto) {
 		return !this.getCriterio().cumple(producto);
 	}
 }

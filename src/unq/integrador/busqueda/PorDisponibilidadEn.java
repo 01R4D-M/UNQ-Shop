@@ -10,7 +10,7 @@ public class PorDisponibilidadEn implements Criterio {
 		
 	}
 	
-	public boolean cumple(Producto producto) {
+	public boolean cumple(IProducto producto) {
 		return shop.hayStockDe(producto);
 	}
 

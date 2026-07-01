@@ -16,28 +16,31 @@ public class UNQShop {
 		
 	}
 	
-	public void agregarProductoAlCatalogoYSetearStockInicialEn(Producto producto, int cantidad) {
+	public void agregarProductoAlCatalogoYSetearStockInicialEn(IProducto producto, int cantidad) {
 		if(!this.catalogo.tieneProducto(producto)) {
 			this.catalogo.agregarProducto(producto);
 			this.incrementarStock(producto, cantidad);
 		}
 	}
-	public void incrementarStock(Producto producto, int cantidad) {					
+	public void incrementarStock(IProducto producto, int cantidad) {					
 		if(this.catalogo.tieneProducto(producto)) {
 			this.deposito.incrementarStock(producto, cantidad);						
 		}
 	}
-	public void decrementarStock(Producto producto, int cantidad) {
+	public void decrementarStock(IProducto producto, int cantidad) {
 		this.deposito.decrementarStock(producto, cantidad);
 	}
-	public boolean hayStockDe(Producto producto) {
+	public boolean hayStockDe(IProducto producto) {
 		return this.deposito.hayStockDe(producto);
 	}
-	public int getStockDe(Producto producto) {
+	public int getStockDe(IProducto producto) {
 		return this.deposito.getStockDe(producto);
 	}
-	public boolean contieneProductoEnCatalogo(Producto producto) {
+	public boolean contieneProductoEnCatalogo(IProducto producto) {
 		return this.catalogo.tieneProducto(producto);
+	}
+	public int ocurrenciasDeEnCatalogo(IProducto producto) {
+		return this.catalogo.ocurrenciasDe(producto);
 	}
 
 	public List<IPedido> getPedidos() {

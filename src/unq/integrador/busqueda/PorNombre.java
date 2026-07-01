@@ -18,7 +18,7 @@ public class PorNombre implements Criterio {
 	}
 	
 	@Override
-	public boolean cumple(Producto producto) {
+	public boolean cumple(IProducto producto) {
 		return producto.getNombre().equalsIgnoreCase(this.getNombre());
 	}
 }

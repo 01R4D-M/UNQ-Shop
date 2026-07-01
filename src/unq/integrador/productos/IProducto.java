@@ -6,4 +6,5 @@ public interface IProducto {
 	public double getPrecioBase();
 	public double getPeso();
 	public double getPrecioFinal();
+	public String getCategoria();
 }

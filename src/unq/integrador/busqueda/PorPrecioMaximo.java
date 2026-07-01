@@ -18,7 +18,7 @@ public class PorPrecioMaximo implements Criterio {
 	 }
 	 
 	 @Override
-	 public boolean cumple(Producto producto) {
+	 public boolean cumple(IProducto producto) {
 		 return producto.getPrecioBase() <= this.getPrecioMaximo();
 	 }
 }

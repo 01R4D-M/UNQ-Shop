@@ -1,5 +1,5 @@
 package unq.integrador.busqueda;
-import unq.integrador.productos.*;
+import unq.integrador.productos.IProducto;
 
 public class PorCategoria implements Criterio {
 	private String categoria;
@@ -18,7 +18,7 @@ public class PorCategoria implements Criterio {
 	}
 	
 	@Override
-	public boolean cumple(Producto producto) {
+	public boolean cumple(IProducto producto) {
 		return producto.getCategoria().equalsIgnoreCase(this.getCategoria());
 	}
 }

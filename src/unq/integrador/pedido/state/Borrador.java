@@ -9,7 +9,7 @@ public class Borrador extends PedidoState {
 
     public void procesarPago(IPedido pedido, double precioFinal) {
         pedido.getMetodoDePago().validarPago(precioFinal);
-        pedido.setEstado(new Confirmado());
+        pedido.setEstado(new Confirmado(pedido));
         pedido.prepararEnvio();
     }
 

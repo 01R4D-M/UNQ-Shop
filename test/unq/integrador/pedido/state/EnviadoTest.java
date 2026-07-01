@@ -35,6 +35,7 @@ public class EnviadoTest {
     void testCancelarPedido() {
         estado.cancelarPedido(pedido);
 
+        verify(pedido).reponerStock();
         verify(pedido).reembolsarSinEnvio();
         verify(pedido).setEstado(isA(Cancelado.class));
     }

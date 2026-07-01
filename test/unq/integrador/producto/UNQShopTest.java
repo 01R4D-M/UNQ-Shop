@@ -15,23 +15,29 @@ public class UNQShopTest {
 	private Producto producto;
 	private Deposito depositoMock;
 	private Deposito depositoReal;
+	private Catalogo catalogoMock;
 	
 	@BeforeEach
 	void setUp() {
 		depositoMock = mock(Deposito.class);
 		depositoReal = new Deposito();
-		shopConDepositoMock = new UNQShop(depositoMock);
-		shopConDepositoReal = new UNQShop(depositoReal);
+		catalogoMock = mock(Catalogo.class);
+		shopConDepositoMock = new UNQShop(depositoMock, catalogoMock);
+		shopConDepositoReal = new UNQShop(depositoReal, catalogoMock);
 		producto = mock(Producto.class);
 	}
 	
 	@Test
-	void testSeAgreganProductosAlCatalogoDeFormaValida() {
+	void testElShopInteractuaConElCatalogoYElDepositoAlAgregarUnNuevoProductoAlCatalogo() {
+		when(catalogoMock.tieneProducto(producto)).thenReturn(true);
 		shopConDepositoMock.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 5);
-		assertTrue(shopConDepositoMock.contieneProductoEnCatalogo(producto));
+		
+		verify(catalogoMock).agregarProducto(producto);
+		verify(depositoMock).incrementarStock(producto, 5);
 	}
 	@Test 
 	void testSeIncrementaElStockDeUnProductoQueEstaEnElCatalogoDeFormaValida() {
+		when(catalogoMock.tieneProducto(producto)).thenReturn(true);
 		shopConDepositoReal.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
 		shopConDepositoReal.incrementarStock(producto, 10);
 		
@@ -51,6 +57,7 @@ public class UNQShopTest {
 	}
 	@Test
 	void testElShopInteractuaConElDepositoAlAgregarStock() {
+		when(catalogoMock.tieneProducto(producto)).thenReturn(true);
 		shopConDepositoMock.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
 		verify(depositoMock).incrementarStock(producto, 10);
 	}
@@ -61,7 +68,7 @@ public class UNQShopTest {
 		verify(depositoMock).decrementarStock(producto, 5);
 	}
 	@Test
-	void testAunqueSeIntenteDecrementarMasStockDelDisponibleElShopInteractuaConElDeposito() {
+	void testComoElShopNoConoceLaLogicaSobreManejoDeStock_AunqueSeIntenteDecrementarMasStockDelDisponibleElShopInteractuaConElDeposito() {
 		shopConDepositoMock.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 5);
 		shopConDepositoMock.decrementarStock(producto, 10);
 		verify(depositoMock).decrementarStock(producto, 10);

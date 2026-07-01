@@ -8,19 +8,18 @@ public class UNQShop {
 	private List<IPedido> pedidos;
 	private Deposito deposito;
 	
-	public UNQShop(Deposito deposito) {
+	public UNQShop(Deposito deposito, Catalogo catalogo) {
 		super();
-		this.catalogo = new Catalogo();
+		this.catalogo = catalogo;
 		this.pedidos = new ArrayList<IPedido>();
 		this.deposito = deposito;
 		
 	}
 	
 	public void agregarProductoAlCatalogoYSetearStockInicialEn(IProducto producto, int cantidad) {
-		if(!this.catalogo.tieneProducto(producto)) {
 			this.catalogo.agregarProducto(producto);
 			this.incrementarStock(producto, cantidad);
-		}
+		
 	}
 	public void incrementarStock(IProducto producto, int cantidad) {					
 		if(this.catalogo.tieneProducto(producto)) {

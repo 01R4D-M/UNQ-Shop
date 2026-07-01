@@ -47,7 +47,7 @@ public class Paquete extends Producto {
 	}
 
 	public double getPeso() {
-		return this.productos.stream().mapToDouble(p -> getPeso()).sum();
+		return this.productos.stream().mapToDouble(p -> p.getPeso()).sum();
 	}
 	
 	public boolean contieneProducto(Producto producto) {

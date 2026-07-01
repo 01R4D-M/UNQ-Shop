@@ -130,4 +130,13 @@ class PaqueteTest {
 		
 		assertEquals(4275, paquete.getPrecioFinal());
 	}
+	@Test
+	void unPaqueteCalculaSuPesoDeFormaValida() {
+		double unPeso = 10;
+		when(plancha.getPeso()).thenReturn(unPeso);
+		when(lavarropas.getPeso()).thenReturn(unPeso);
+		when(aspiradora.getPeso()).thenReturn(unPeso);
+		
+		assertEquals(30, paqueteHogar.getPeso());
+	}
 }

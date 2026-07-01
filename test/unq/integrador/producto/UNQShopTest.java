@@ -50,12 +50,6 @@ public class UNQShopTest {
 		verifyNoInteractions(depositoMock);
 	}
 	@Test
-	void testNoSePuedeAgregarDosVecesElMismoProductoAlCatalogo(){
-		shopConDepositoMock.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
-		shopConDepositoMock.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
-		assertEquals(1, shopConDepositoMock.ocurrenciasDeEnCatalogo(producto));
-	}
-	@Test
 	void testElShopInteractuaConElDepositoAlAgregarStock() {
 		shopConDepositoMock.agregarProductoAlCatalogoYSetearStockInicialEn(producto, 10);
 		verify(depositoMock).incrementarStock(producto, 10);

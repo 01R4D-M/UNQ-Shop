@@ -37,6 +37,7 @@ class CatalogoTest {
 	}
 	@Test
 	void siUnProductoYaExisteEnElCatalogoNoSeAgregaOtraVez() {
+		when(productoMock.getNombre()).thenReturn("plancha");
 		catalogo.agregarProducto(productoMock);
 		catalogo.agregarProducto(productoMock);
 		

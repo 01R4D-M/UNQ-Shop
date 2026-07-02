@@ -17,9 +17,14 @@ public class BorradorTest {
 
     @BeforeEach
     void setUp() {
-        estado = new Borrador();
         pedido = mock(IPedido.class);
+        estado = new Borrador(pedido);
         metodoDePago = mock(MetodoDePago.class);
+    }
+
+    @Test
+    void testInicializacion() {
+        verify(pedido).notificarSubsistemas();
     }
 
     @Test
@@ -47,11 +52,14 @@ public class BorradorTest {
 
     @Test
     void testMetodosVacios(){
+        verify(pedido).notificarSubsistemas();
+        
         estado.prepararEnvio(pedido);
         estado.enviarPedido(pedido);
         estado.entregarPedido(pedido);
 
-        verifyNoInteractions(pedido);
+        verifyNoMoreInteractions(pedido);
+
     }
 
 }

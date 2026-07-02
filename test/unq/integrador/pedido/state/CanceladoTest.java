@@ -14,8 +14,13 @@ public class CanceladoTest {
 
     @BeforeEach
     void setUp() {
-        estado = new Cancelado();
         pedido = mock(IPedido.class);
+        estado = new Cancelado(pedido);
+    }
+
+    @Test
+    void testInicializacion() {
+        verify(pedido).notificarSubsistemas();
     }
 
     @Test
@@ -25,12 +30,14 @@ public class CanceladoTest {
 
     @Test
     void testMetodosVacios(){
+        verify(pedido).notificarSubsistemas();
+
         estado.procesarPago(pedido, 0.0);
         estado.prepararEnvio(pedido);
         estado.enviarPedido(pedido);
         estado.entregarPedido(pedido);
         estado.cancelarPedido(pedido);
 
-        verifyNoInteractions(pedido);
+        verifyNoMoreInteractions(pedido);
     }
 }

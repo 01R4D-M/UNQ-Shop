@@ -20,8 +20,9 @@ public class ConfirmadoTest {
     }
 
     @Test
-    void testSeReponeElStockDelPedidoAlInicializar() {
+    void testInicializacion() {
         verify(pedido).reducirStock();
+        verify(pedido).notificarSubsistemas();
     }
 
     @Test
@@ -46,7 +47,8 @@ public class ConfirmadoTest {
 
     @Test
     void testMetodosVacios(){
-        verify(pedido).reducirStock();;
+        verify(pedido).reducirStock();
+        verify(pedido).notificarSubsistemas();
 
         estado.procesarPago(pedido, 0.0);
         estado.enviarPedido(pedido);

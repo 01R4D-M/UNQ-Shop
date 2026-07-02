@@ -8,7 +8,11 @@ import java.util.Map;
 import unq.integrador.productos.Deposito;
 import unq.integrador.productos.IProducto;
 import unq.integrador.envio.IEnvio;
-import unq.integrador.notificacion.PedidoObserver;
+import unq.integrador.notificacion.GeneradorFactura;
+import unq.integrador.notificacion.MailSender;
+import unq.integrador.notificacion.NotificadorMail;
+import unq.integrador.notificacion.PedidoVisitor;
+import unq.integrador.notificacion.SistemaFidelizacion;
 import unq.integrador.pago.MetodoDePago;
 import unq.integrador.pedido.state.Borrador;
 import unq.integrador.pedido.state.PedidoState;
@@ -17,15 +21,31 @@ public class Pedido implements IPedido {
     private Map<IProducto, Integer> productos;
     private IEnvio metodoDeEnvio;
     private MetodoDePago metodoDePago;
-    private List<PedidoObserver> subsistemas;
+    private List<PedidoVisitor> subsistemas;
     private PedidoState estado;
     private Deposito deposito;
 
     public Pedido(Deposito deposito){
         this.productos = new HashMap<IProducto,Integer>();
-        this.subsistemas = new ArrayList<PedidoObserver>();
-        this.estado = new Borrador();
+        this.subsistemas = new ArrayList<PedidoVisitor>();
+        this.estado = new Borrador(this);
         this.deposito = deposito;
+
+        MailSender mailSender = new MailSender() {
+            public void enviarMail(String direcciónDestino, String título, String mensaje, String adjunto){};
+        };
+        // sabemos que esto no es correcto, pero al ser un Singleton que en
+        // este modelo no tiene implementacion y por lo tanto tampoco ningun efecto,
+        // lo hacemos de esta forma. En otro contexto, esta variable recibiría
+        // una instancia de una clase concreta que implementa MailSender.
+
+        PedidoVisitor notificadorMail = new NotificadorMail(mailSender);
+        PedidoVisitor generadorFactura = new GeneradorFactura();
+        PedidoVisitor sistemaFidelizacion = new SistemaFidelizacion();
+
+        this.agregarSubsistema(notificadorMail);
+        this.agregarSubsistema(generadorFactura);
+        this.agregarSubsistema(sistemaFidelizacion);
     }
 
     public void agregarProducto(IProducto producto) {
@@ -131,5 +151,17 @@ public class Pedido implements IPedido {
         .entrySet()
         .stream()
         .forEach(p -> this.deposito.incrementarStock(p.getKey(), p.getValue()));
+    }
+
+    public void agregarSubsistema(PedidoVisitor subsistema) {
+        this.subsistemas.add(subsistema);
+    }
+
+    public void eliminarSubsistema(PedidoVisitor subsistema) {
+        this.subsistemas.remove(subsistema);
+    }
+
+    public void notificarSubsistemas() {
+        this.subsistemas.stream().forEach(s -> this.estado.activarSubsistema(s));
     }
 }

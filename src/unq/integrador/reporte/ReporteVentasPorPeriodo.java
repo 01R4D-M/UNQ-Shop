@@ -1,6 +1,8 @@
 package unq.integrador.reporte;
 
 import unq.integrador.productos.*;
+import unq.integrador.pedido.*;
+import java.time.LocalDate;
 
 public class ReporteVentasPorPeriodo extends Reporte {
 

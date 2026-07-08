@@ -17,6 +17,6 @@ public class EnvioEstandar implements IEnvio {
 
     @Override
     public int estimarDias(IPedido pedido) {
-        return 5 + (int) (Math.random() * 3); // 5 a 7 días
+        return 6; // 5 a 7 días
     }
 }

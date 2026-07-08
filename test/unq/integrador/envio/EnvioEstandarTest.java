@@ -10,7 +10,8 @@ import unq.integrador.pedido.IPedido;
 public class EnvioEstandarTest {
     private EnvioEstandar envio;
     private IPedido pedido;
-Retiro    @BeforeEach
+
+    @BeforeEach
     void setUp() {
         envio = new EnvioEstandar();
     }

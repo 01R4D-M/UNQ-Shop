@@ -7,12 +7,14 @@ import org.junit.jupiter.api.Test;
 
 import unq.integrador.pedido.IPedido;
 
-public class EnvioEstandarTest {
-    private EnvioEstandar envio;
+public class RetiroEnSucursalTest {
+
     private IPedido pedido;
-Retiro    @BeforeEach
+    private RetiroEnSucursal envio;
+
+    @BeforeEach
     void setUp() {
-        envio = new EnvioEstandar();
+        envio = new RetiroEnSucursal();
     }
 
     @Test
@@ -22,6 +24,7 @@ Retiro    @BeforeEach
 
     @Test
     void testEstimarDias() {
-        assertEquals(6, envio.estimarDias(pedido));
+        assertEquals(0, envio.estimarDias(pedido));
     }
+
 }

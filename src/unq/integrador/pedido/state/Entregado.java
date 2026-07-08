@@ -7,5 +7,10 @@ public class Entregado extends PedidoState {
         return false;
     }
 
-    public void cancelarPedido(IPedido pedido) {}
+    public Entregado(IPedido pedido) {
+        super(pedido);
+    }
+
+    public void cancelarPedido(IPedido pedido) {
+    }
 }

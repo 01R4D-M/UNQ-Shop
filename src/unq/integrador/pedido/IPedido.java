@@ -1,7 +1,8 @@
 package unq.integrador.pedido;
 
-import unq.integrador.IProducto;
+import unq.integrador.productos.IProducto;
 import unq.integrador.envio.IEnvio;
+import unq.integrador.notificacion.PedidoVisitor;
 import unq.integrador.pago.MetodoDePago;
 import unq.integrador.pedido.state.PedidoState;
 
@@ -25,4 +26,11 @@ public interface IPedido {
     public void setMetodoDePago(MetodoDePago metodoDePago);
 
     public void setEstado(PedidoState estado);
+
+    public void reducirStock();
+    public void reponerStock();
+
+    public void agregarSubsistema(PedidoVisitor subsistema);
+    public void eliminarSubsistema(PedidoVisitor subsistema);
+    public void notificarSubsistemas();
 }

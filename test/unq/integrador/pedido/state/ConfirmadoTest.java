@@ -15,8 +15,13 @@ public class ConfirmadoTest {
 
     @BeforeEach
     void setUp() {
-        estado = new Confirmado();
         pedido = mock(IPedido.class);
+        estado = new Confirmado(pedido);
+    }
+
+    @Test
+    void testInicializacion() {
+        verify(pedido).notificarSubsistemas();
     }
 
     @Test
@@ -40,11 +45,13 @@ public class ConfirmadoTest {
     }
 
     @Test
-    void testMetodosVacios(){
+    void testMetodosVacios() {
+        verify(pedido).notificarSubsistemas();
+
         estado.procesarPago(pedido, 0.0);
         estado.enviarPedido(pedido);
         estado.entregarPedido(pedido);
 
-        verifyNoInteractions(pedido);
+        verifyNoMoreInteractions(pedido);
     }
 }

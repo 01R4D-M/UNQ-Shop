@@ -1,8 +1,10 @@
-package unq.integrador;
+package unq.integrador.producto;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
+
+import unq.integrador.productos.ProductoIndividual;
 
 class ProductoIndividualTest {
 

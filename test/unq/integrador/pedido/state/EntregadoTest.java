@@ -14,8 +14,13 @@ public class EntregadoTest {
 
     @BeforeEach
     void setUp() {
-        estado = new Entregado();
         pedido = mock(IPedido.class);
+        estado = new Entregado(pedido);
+    }
+
+    @Test
+    void testInicializacion() {
+        verify(pedido).notificarSubsistemas();
     }
 
     @Test
@@ -24,13 +29,14 @@ public class EntregadoTest {
     }
 
     @Test
-    void testMetodosVacios(){
+    void testMetodosVacios() {
+        verify(pedido).notificarSubsistemas();
+
         estado.procesarPago(pedido, 0.0);
         estado.prepararEnvio(pedido);
         estado.enviarPedido(pedido);
         estado.entregarPedido(pedido);
-        estado.cancelarPedido(pedido);
 
-        verifyNoInteractions(pedido);
+        verifyNoMoreInteractions(pedido);
     }
 }

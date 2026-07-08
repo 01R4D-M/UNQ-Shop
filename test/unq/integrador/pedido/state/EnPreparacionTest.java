@@ -15,8 +15,13 @@ public class EnPreparacionTest {
 
     @BeforeEach
     void setUp() {
-        estado = new EnPreparacion();
         pedido = mock(IPedido.class);
+        estado = new EnPreparacion(pedido);
+    }
+
+    @Test
+    void testInicializacion() {
+        verify(pedido).notificarSubsistemas();
     }
 
     @Test
@@ -42,10 +47,12 @@ public class EnPreparacionTest {
 
     @Test
     void testMetodosVacios(){
+        verify(pedido).notificarSubsistemas();
+
         estado.procesarPago(pedido, 0.0);
         estado.prepararEnvio(pedido);
         estado.entregarPedido(pedido);
 
-        verifyNoInteractions(pedido);
+        verifyNoMoreInteractions(pedido);
     }
 }

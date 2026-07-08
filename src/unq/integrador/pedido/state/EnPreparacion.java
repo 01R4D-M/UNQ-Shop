@@ -7,13 +7,17 @@ public class EnPreparacion extends PedidoState {
         return false;
     }
 
+    public EnPreparacion(IPedido pedido) {
+        super(pedido);
+    }
+
     public void enviarPedido(IPedido pedido) {
-        pedido.setEstado(new Enviado());
+        pedido.setEstado(new Enviado(pedido));
         pedido.entregar();
     }
 
     public void cancelarPedido(IPedido pedido) {
         pedido.reembolsarTotal();
-        pedido.setEstado(new Cancelado());
+        pedido.setEstado(new Cancelado(pedido));
     }
 }

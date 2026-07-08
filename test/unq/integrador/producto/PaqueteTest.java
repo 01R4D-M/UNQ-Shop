@@ -1,9 +1,14 @@
-package unq.integrador;
+package unq.integrador.producto;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
+
+import unq.integrador.productos.Paquete;
+import unq.integrador.productos.Producto;
+import unq.integrador.productos.ProductoIndividual;
+
 import static org.mockito.Mockito.*;
 
 
@@ -20,11 +25,11 @@ class PaqueteTest {
 	
 	@BeforeEach
 	void setUp() {
-		paquete = new Paquete ("Audio", "Auriculares + Parlantes", 10);
+		paquete = new Paquete ("Musica", "Auriculares + Parlantes", "Audio", 10);
 		
 		
 		
-		paqueteHogar = new Paquete("Hogar", "Plancha + Aspiradora + Lavarropas", 25);
+		paqueteHogar = new Paquete("Hogareño", "Plancha + Aspiradora + Lavarropas", "Hogar", 25);
 		
 		auriculares = mock(ProductoIndividual.class);
 		parlantes = mock(ProductoIndividual.class);
@@ -39,21 +44,21 @@ class PaqueteTest {
 	
 	@Test
 	void testInicialzacionConstructor() {
-		assertEquals("Audio", paquete.getNombre());
+		assertEquals("Musica", paquete.getNombre());
 		assertEquals("Auriculares + Parlantes", paquete.getDescripcion());
 		assertEquals(10, paquete.getPorcentajeDescuento());
 	}
 	
 	@Test
-	void testElDescuentoDebeSerMenorOIgualACien() {
-		assertThrows(	IllegalArgumentException.class, 
-						() -> new Paquete("Cocina", "Licuadora + Tostadora", 101));
+	void testSiElDescuentoSeteadoEnElConstructorNoEsMenorOIgualACien_ElDescuentoEsCero() {
+		Paquete unPaquete = new Paquete("Gastronomico", "Licuadora + Tostadora", "Cocina", 101);
+		assertEquals(0, unPaquete.getPorcentajeDescuento());
 	}
 	
 	@Test
-	void testElDescuentoDebeSerMayorOIgualACero() {
-		assertThrows(	IllegalArgumentException.class, 
-						() -> new Paquete("Cocina", "Licuadora + Tostadora", -1));
+	void testSiElDescuentoSeteadoNoEsMayorOIgualACero_ElDescuentoEsCero() {
+		Paquete unPaquete = new Paquete("Gastronomico", "Licuadora + Tostadora", "Cocina", -1);
+		assertEquals(0, unPaquete.getPorcentajeDescuento());
 	}
 	
 	@Test 
@@ -124,5 +129,14 @@ class PaqueteTest {
 		// paquete = (3750 + 1000) - 10% = 4275
 		
 		assertEquals(4275, paquete.getPrecioFinal());
+	}
+	@Test
+	void unPaqueteCalculaSuPesoDeFormaValida() {
+		double unPeso = 10;
+		when(plancha.getPeso()).thenReturn(unPeso);
+		when(lavarropas.getPeso()).thenReturn(unPeso);
+		when(aspiradora.getPeso()).thenReturn(unPeso);
+		
+		assertEquals(30, paqueteHogar.getPeso());
 	}
 }

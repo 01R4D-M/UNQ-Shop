@@ -7,12 +7,16 @@ public class Enviado extends PedidoState {
         return false;
     }
 
+    public Enviado(IPedido pedido) {
+        super(pedido);
+    }
+
     public void entregarPedido(IPedido pedido) {
-        pedido.setEstado(new Entregado());
+        pedido.setEstado(new Entregado(pedido));
     }
 
     public void cancelarPedido(IPedido pedido) {
         pedido.reembolsarSinEnvio();
-        pedido.setEstado(new Cancelado());
+        pedido.setEstado(new Cancelado(pedido));
     }
 }

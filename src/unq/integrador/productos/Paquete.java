@@ -1,4 +1,4 @@
-package unq.integrador;
+package unq.integrador.productos;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -7,8 +7,8 @@ public class Paquete extends Producto {
 	private double porcentajeDescuento;
 	private List<Producto> productos;
 	
-	public Paquete(String nombre, String descripcion, int descuento) {
-		super(nombre, descripcion);
+	public Paquete(String nombre, String descripcion, String categoria, int descuento) {
+		super(nombre, descripcion, categoria);
 		this.setPorcentajeDescuento(descuento);
 		this.productos = new ArrayList<Producto>();
 	}
@@ -19,10 +19,9 @@ public class Paquete extends Producto {
 
 	public void setPorcentajeDescuento(double porcentajeDescuento) {  
 		
-		if(porcentajeDescuento < 0 || porcentajeDescuento > 100) {
-			throw new IllegalArgumentException("El descuento debe estar entre 1 y 100");
-		}
-		this.porcentajeDescuento = porcentajeDescuento;
+		if(porcentajeDescuento >= 0 && porcentajeDescuento <= 100) {
+			this.porcentajeDescuento = porcentajeDescuento;
+		}	
 	}
 	
 	public void agregarProducto(Producto producto) {
@@ -45,6 +44,10 @@ public class Paquete extends Producto {
 				.mapToDouble(p -> p.getPrecioBase())
 				.sum();
 		return totalPrecios;
+	}
+
+	public double getPeso() {
+		return this.productos.stream().mapToDouble(p -> p.getPeso()).sum();
 	}
 	
 	public boolean contieneProducto(Producto producto) {

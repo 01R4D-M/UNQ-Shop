@@ -7,7 +7,6 @@ public class ProductoIndividual extends Producto {
 
 	private int sku;
 	private String marca;
-	private String categoria;
 	private double peso;
 	private double precioBase;
 	private Map<String, Object> atributosDinamicos;
@@ -43,14 +42,6 @@ public class ProductoIndividual extends Producto {
 
 	public void setMarca(String marca) {
 		this.marca = marca;
-	}
-
-	public String getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
 	}
 
 	public double getPeso() {

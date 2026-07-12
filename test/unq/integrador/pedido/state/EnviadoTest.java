@@ -20,6 +20,11 @@ public class EnviadoTest {
     }
 
     @Test
+    void testInicializacion() {
+        verify(pedido).notificarSubsistemas();
+    }
+
+    @Test
     void testNoPuedeModificarProductos() {
         assertEquals(false, estado.puedeModificarProductos());
     }
@@ -35,16 +40,19 @@ public class EnviadoTest {
     void testCancelarPedido() {
         estado.cancelarPedido(pedido);
 
+        verify(pedido).reponerStock();
         verify(pedido).reembolsarSinEnvio();
         verify(pedido).setEstado(isA(Cancelado.class));
     }
 
-    // @Test
-    // void testMetodosVacios() {
-    // estado.procesarPago(pedido, 0.0);
-    // estado.prepararEnvio(pedido);
-    // estado.enviarPedido(pedido);
-    //
-    // verifyNoInteractions(pedido);
-    // }
+    @Test
+    void testMetodosVacios() {
+        verify(pedido).notificarSubsistemas();
+
+        estado.procesarPago(pedido, 0.0);
+        estado.prepararEnvio(pedido);
+        estado.enviarPedido(pedido);
+
+        verifyNoMoreInteractions(pedido);
+    }
 }

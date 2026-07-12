@@ -8,7 +8,7 @@ public class Direccion {
     private final String codigoPostal;
 
     public Direccion(String calle, String numero, String ciudad,
-                     String provincia, String codigoPostal) {
+            String provincia, String codigoPostal) {
         this.calle = calle;
         this.numero = numero;
         this.ciudad = ciudad;
@@ -16,9 +16,23 @@ public class Direccion {
         this.codigoPostal = codigoPostal;
     }
 
-    public String getCalle() { return calle; }
-    public String getNumero() { return numero; }
-    public String getCiudad() { return ciudad; }
-    public String getProvincia() { return provincia; }
-    public String getCodigoPostal() { return codigoPostal; }
+    public String getCalle() {
+        return calle;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
 }

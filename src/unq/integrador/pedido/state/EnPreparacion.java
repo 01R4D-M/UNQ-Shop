@@ -3,12 +3,12 @@ package unq.integrador.pedido.state;
 import unq.integrador.pedido.IPedido;
 
 public class EnPreparacion extends PedidoState {
-    public boolean puedeModificarProductos() {
-        return false;
-    }
-
     public EnPreparacion(IPedido pedido) {
         super(pedido);
+    }
+
+    public boolean puedeModificarProductos() {
+        return false;
     }
 
     public void enviarPedido(IPedido pedido) {

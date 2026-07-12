@@ -22,9 +22,4 @@ public class TransferenciaBancaria extends MetodoDePago {
         System.out.println("Notificando el resultado de la transferencia bancaria...");
     }
 
-    @Override
-    public void reembolsarPago(double monto) {
-        System.out.println("Reembolsando " + monto + " a través de transferencia bancaria...");
-    }
-
 }
